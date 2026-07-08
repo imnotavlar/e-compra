@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="imagem\**" />
+    <EmbeddedResource Remove="imagem\**" />
+    <None Remove="imagem\**" />
+    <Page Remove="imagem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="View\CarrinhoEFinalizarPedido.cs" />
+    <Compile Remove="View\FaçaPedidoC.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Dados\imagem\fundo.png" />
+    <None Remove="Dados\imagem\fundoteste.png" />
+    <None Remove="Dados\imagem\imgcontato.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="View\FaçaPedidoC.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.6.0" />
+    <PackageReference Include="itext7" Version="9.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Dados\imagem\fundoteste.png" />
+    <Resource Include="Dados\imagem\imgcontato.png" />
+  </ItemGroup>
+
+</Project>

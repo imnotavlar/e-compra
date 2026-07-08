@@ -1,0 +1,190 @@
+﻿<Window x:Class="Teste.View.PrincipalAdministrador"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowState="Maximized"
+        Title="Dashboard - Sistema Basic" Height="700" Width="1100"
+        FontFamily="Segoe UI, Roboto, Helvetica Neue, sans-serif"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="SidebarBgBrush" Color="#10127D"/>
+        <SolidColorBrush x:Key="SidebarTextBrush" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="SidebarTextMutedBrush" Color="#94A3B8"/>
+        <SolidColorBrush x:Key="MainBgBrush" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="MenuButtonHoverBrush" Color="#1518A8"/>
+
+        <Geometry x:Key="IconLogoff">M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z</Geometry>
+        <Geometry x:Key="IconLogo">M13.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 5.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0zM17.5 11.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM21 13.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0zM11.5 17.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM5.5 21a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0zM2 13.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM5.5 11a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0zM12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z</Geometry>
+        <Geometry x:Key="IconHome">M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z</Geometry>
+        <Geometry x:Key="IconPedidos">M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z</Geometry>
+        <Geometry x:Key="IconCadastro">M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z</Geometry>
+        <Geometry x:Key="IconCesta">M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z</Geometry>
+        <Geometry x:Key="IconPendencias">M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-.22-13h-.06c-.4 0-.72.32-.72.72V12c0 .41.32.72.72.72h3.78c.4 0 .72-.32.72-.72v-.06c0-.4-.32-.72-.72-.72H12.5V7.72c0-.4-.32-.72-.72-.72z</Geometry>
+        <Geometry x:Key="IconGrafico">M16 11V3l1.29 1.29-2.58 2.58-2.41-2.41L3 13.71l1.41 1.41 7.88-7.88 2.41 2.41 3.99-3.99L20 7v4h-4z</Geometry>
+        <Geometry x:Key="IconClientes">M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z</Geometry>
+
+        <Geometry x:Key="IconConfig">M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z</Geometry>
+
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource MenuButtonHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#1518A8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource MainBgBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="{StaticResource SidebarBgBrush}" Grid.Column="0" CornerRadius="0,20,20,0">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Direction="0" ShadowDepth="1" Opacity="0.2"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="25,30">
+                    <TextBlock Text="🛒E-Compra" FontSize="22" FontWeight="Bold" Foreground="{StaticResource SidebarTextBrush}" VerticalAlignment="Center"/>
+                    <TextBlock Text="™" FontSize="10" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <Border Grid.Row="1" Background="#1518A8" Margin="15,0,15,20" Padding="12,15" CornerRadius="12">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Ellipse Grid.Column="0" Width="45" Height="45" Margin="0,0,10,0" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" MouseDown="AbrirPerfil_Click" Cursor="Hand">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="ImagemPerfilBrush"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" MouseDown="AbrirPerfil_Click" Cursor="Hand">
+                            <TextBlock Text="ADMINISTRADOR" FontSize="10" FontWeight="Bold" Foreground="{StaticResource SidebarTextMutedBrush}"/>
+                            <TextBlock x:Name="NomeAdminMenu" Text="Olá, Admin" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource SidebarTextBrush}" Margin="0,1,0,0" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+
+                        <Button Grid.Column="2" Width="32" Height="32" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="Perfil_Click" ToolTip="Editar Perfil">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="btnBg" Background="Transparent" CornerRadius="6">
+                                        <Path Data="{StaticResource IconConfig}" Fill="{StaticResource SidebarTextMutedBrush}" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="btnBg" Property="Background" Value="#252AA1"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="10,0">
+                    <StackPanel>
+                        <TextBlock Text="PRINCIPAL" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SidebarTextMutedBrush}" Margin="15,10,0,10"/>
+
+                        <Button Style="{StaticResource MenuButton}" Click="Inicio_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconHome}" Fill="{StaticResource SidebarTextBrush}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Início" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource MenuButton}" Click="Pedidos_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconPedidos}" Fill="{StaticResource SidebarTextBrush}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Pedidos" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <TextBlock Text="GESTÃO" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SidebarTextMutedBrush}" Margin="15,20,0,10"/>
+
+                        <Button Style="{StaticResource MenuButton}" Click="Cadastrar_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconCadastro}" Fill="{StaticResource SidebarTextBrush}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Cadastrar Produtos" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource MenuButton}" Click="Cestas_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconCesta}" Fill="{StaticResource SidebarTextBrush}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Cestas Básicas" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource MenuButton}" Click="Pendencias_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconPendencias}" Fill="{StaticResource SidebarTextBrush}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Pendências" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <TextBlock Text="RELATÓRIOS" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SidebarTextMutedBrush}" Margin="15,20,0,10"/>
+
+                        <Button Style="{StaticResource MenuButton}" Click="Clientes_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconClientes}" Fill="{StaticResource SidebarTextBrush}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Clientes" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Border Grid.Row="3" Padding="10" BorderBrush="#2D3748" BorderThickness="0,1,0,0">
+                    <StackPanel>
+                        <Button Style="{StaticResource MenuButton}" Click="Logoff_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconLogoff}" Fill="#EF4444" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Sair da Conta" FontSize="14" FontWeight="Medium" Foreground="#EF4444" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Margin="25" Background="White" CornerRadius="16">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Direction="0" ShadowDepth="0" Opacity="0.05" Color="Black"/>
+            </Border.Effect>
+            <ContentControl x:Name="ConteudoPrincipal" Margin="20" />
+        </Border>
+    </Grid>
+</Window>

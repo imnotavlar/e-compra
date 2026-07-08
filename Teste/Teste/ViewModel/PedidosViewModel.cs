@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Teste.Model;
+using Teste.Repository;
+
+namespace Teste.ViewModel
+{
+    public class PedidosViewModel : INotifyPropertyChanged
+    {
+        private PedidoRepository _repository;
+        private int _idUsuarioLogado;
+
+        public ObservableCollection<Pedido> Pedidos { get; set; }
+        public ObservableCollection<Pedido> ListaPedidosEntregues { get; set; } = new ObservableCollection<Pedido>();
+        public ObservableCollection<Pedido> ListaPedidosPendentes { get; set; } = new ObservableCollection<Pedido>();
+
+        public ObservableCollection<Pedido> ListaPedidosACaminho { get; set; } = new ObservableCollection<Pedido>();
+
+        private Pedido? _pedidoSelecionado;
+        public Pedido? PedidoSelecionado
+        {
+            get => _pedidoSelecionado;
+            set
+            {
+                _pedidoSelecionado = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand VerMaisCommand { get; }
+
+        public PedidosViewModel(int idUsuario)
+        {
+            _idUsuarioLogado = idUsuario;
+            _repository = new PedidoRepository();
+            Pedidos = new ObservableCollection<Pedido>();
+
+            VerMaisCommand = new RelayCommand<Pedido>(pedido => { if (pedido != null) PedidoSelecionado = pedido; });
+
+            CarregarPedidosDoCliente();
+        }
+
+        private void CarregarPedidosDoCliente()
+        {
+
+            var pedidosFiltrados = MemoriaPedidos.Lista
+                .Where(p => p.IdUsuario == _idUsuarioLogado)
+                .ToList();
+
+            Pedidos.Clear();
+            ListaPedidosEntregues.Clear();
+            ListaPedidosPendentes.Clear();
+            ListaPedidosACaminho.Clear();
+
+            foreach (var pedido in pedidosFiltrados)
+            {
+                Pedidos.Add(pedido);
+
+                if (pedido.Status != null && pedido.Status.Trim().Equals("Entregue", StringComparison.OrdinalIgnoreCase))
+                {
+                    ListaPedidosEntregues.Add(pedido);
+                }
+                else if (pedido.Status != null && pedido.Status.Trim().Equals("A Caminho", StringComparison.OrdinalIgnoreCase))
+                {
+                    ListaPedidosACaminho.Add(pedido);
+                }
+                else
+                {
+                    ListaPedidosPendentes.Add(pedido);
+                }
+            }
+
+            if (Pedidos.Any())
+            {
+                PedidoSelecionado = Pedidos.First();
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+
+    public class RelayCommand<T> : ICommand
+    {
+        private readonly Action<T> _execute;
+        public RelayCommand(Action<T> execute) => _execute = execute;
+
+        public bool CanExecute(object? parameter) => true;
+
+        public void Execute(object? parameter)
+        {
+            if (parameter is T valorValido)
+            {
+                _execute(valorValido);
+            }
+        }
+
+        public event EventHandler? CanExecuteChanged { add { } remove { } }
+    }
+}
